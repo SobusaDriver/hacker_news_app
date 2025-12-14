@@ -18,6 +18,8 @@ import { useAppTheme } from "@/theme/context"
 import { $styles } from "@/theme/styles"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
 
+import { $containerStyle, $innerStyle, $justifyFlexEnd, $outerStyle } from "./Screen.styles"
+
 export const DEFAULT_BOTTOM_OFFSET = 50
 
 interface BaseScreenProps {
@@ -61,6 +63,10 @@ interface BaseScreenProps {
    * Pass any additional props directly to the KeyboardAvoidingView component.
    */
   KeyboardAvoidingViewProps?: KeyboardAvoidingViewProps
+  /**
+   * An optional testID for the component.
+   */
+  testID?: string
 }
 
 interface FixedScreenProps extends BaseScreenProps {
@@ -173,9 +179,9 @@ function useAutoPreset(props: AutoScreenProps): {
  * @returns {JSX.Element} - The rendered `ScreenWithoutScrolling` component.
  */
 function ScreenWithoutScrolling(props: ScreenProps) {
-  const { style, contentContainerStyle, children, preset } = props
+  const { style, contentContainerStyle, children, preset, testID } = props
   return (
-    <View style={[$outerStyle, style]}>
+    <View style={[$outerStyle, style]} testID={testID}>
       <View style={[$innerStyle, preset === "fixed" && $justifyFlexEnd, contentContainerStyle]}>
         {children}
       </View>
@@ -195,6 +201,7 @@ function ScreenWithScrolling(props: ScreenProps) {
     contentContainerStyle,
     ScrollViewProps,
     style,
+    testID,
   } = props as ScrollScreenProps
 
   const ref = useRef<ScrollView>(null)
@@ -224,6 +231,7 @@ function ScreenWithScrolling(props: ScreenProps) {
         ScrollViewProps?.contentContainerStyle,
         contentContainerStyle,
       ]}
+      testID={testID ? `${testID}-scroll-view` : undefined}
     >
       {children}
     </KeyboardAwareScrollView>
@@ -250,6 +258,7 @@ export function Screen(props: ScreenProps) {
     safeAreaEdges,
     SystemBarsProps,
     systemBarStyle,
+    testID,
   } = props
 
   const $containerInsets = useSafeAreaInsetsStyle(safeAreaEdges)
@@ -261,6 +270,7 @@ export function Screen(props: ScreenProps) {
         { backgroundColor: backgroundColor || colors.background },
         $containerInsets,
       ]}
+      testID={testID}
     >
       <SystemBars
         style={systemBarStyle || (themeContext === "dark" ? "light" : "dark")}
@@ -272,6 +282,7 @@ export function Screen(props: ScreenProps) {
         keyboardVerticalOffset={keyboardOffset}
         {...KeyboardAvoidingViewProps}
         style={[$styles.flex1, KeyboardAvoidingViewProps?.style]}
+        testID={testID ? `${testID}-keyboard-avoiding-view` : undefined}
       >
         {isNonScrolling(props.preset) ? (
           <ScreenWithoutScrolling {...props} />
@@ -281,25 +292,4 @@ export function Screen(props: ScreenProps) {
       </KeyboardAvoidingView>
     </View>
   )
-}
-
-const $containerStyle: ViewStyle = {
-  flex: 1,
-  height: "100%",
-  width: "100%",
-}
-
-const $outerStyle: ViewStyle = {
-  flex: 1,
-  height: "100%",
-  width: "100%",
-}
-
-const $justifyFlexEnd: ViewStyle = {
-  justifyContent: "flex-end",
-}
-
-const $innerStyle: ViewStyle = {
-  justifyContent: "flex-start",
-  alignItems: "stretch",
 }

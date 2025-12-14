@@ -18,6 +18,14 @@ import { $styles } from "@/theme/styles"
 import type { ThemedStyle } from "@/theme/types"
 
 import { Text, TextProps } from "../Text"
+import {
+  $helper,
+  $inputOuterBase,
+  $inputWrapper,
+  $label,
+  $labelLeft,
+  $labelRight,
+} from "./Toggle.styles"
 
 export interface ToggleProps<T> extends Omit<TouchableOpacityProps, "style"> {
   /**
@@ -252,34 +260,4 @@ function FieldLabel<T>(props: ToggleProps<T>) {
   )
 }
 
-const $inputWrapper: ViewStyle = {
-  alignItems: "center",
-}
-
-export const $inputOuterBase: ViewStyle = {
-  height: 24,
-  width: 24,
-  borderWidth: 2,
-  alignItems: "center",
-  overflow: "hidden",
-  flexGrow: 0,
-  flexShrink: 0,
-  justifyContent: "space-between",
-  flexDirection: "row",
-}
-
-const $helper: ThemedStyle<TextStyle> = ({ spacing }) => ({
-  marginTop: spacing.xs,
-})
-
-const $label: TextStyle = {
-  flex: 1,
-}
-
-const $labelRight: ThemedStyle<TextStyle> = ({ spacing }) => ({
-  marginStart: spacing.md,
-})
-
-const $labelLeft: ThemedStyle<TextStyle> = ({ spacing }) => ({
-  marginEnd: spacing.md,
-})
+export { $inputOuterBase }

@@ -7,7 +7,16 @@ import { useAppTheme } from "@/theme/context"
 import { $styles } from "@/theme/styles"
 import type { ThemedStyle } from "@/theme/types"
 
-import { $inputOuterBase, BaseToggleInputProps, Toggle, ToggleProps } from "./Toggle"
+import {
+  $inputOuter,
+  $switchAccessibility,
+  $switchAccessibilityCircle,
+  $switchAccessibilityIcon,
+  $switchAccessibilityLine,
+  $switchDetail,
+  $switchInner,
+} from "./Switch.styles"
+import { BaseToggleInputProps, Toggle, ToggleProps } from "./Toggle"
 
 export interface SwitchToggleProps extends Omit<ToggleProps<SwitchInputProps>, "ToggleInput"> {
   /**
@@ -218,47 +227,4 @@ function SwitchAccessibilityLabel(props: SwitchInputProps & { role: "on" | "off"
       )}
     </View>
   )
-}
-
-const $inputOuter: StyleProp<ViewStyle> = [
-  $inputOuterBase,
-  { height: 32, width: 56, borderRadius: 16, borderWidth: 0 },
-]
-
-const $switchInner: ThemedStyle<ViewStyle> = ({ colors }) => ({
-  borderColor: colors.transparent,
-  position: "absolute",
-  paddingStart: 4,
-  paddingEnd: 4,
-})
-
-const $switchDetail: SwitchToggleProps["inputDetailStyle"] = {
-  borderRadius: 12,
-  position: "absolute",
-  width: 24,
-  height: 24,
-}
-
-const $switchAccessibility: ViewStyle = {
-  width: "40%",
-  justifyContent: "center",
-  alignItems: "center",
-}
-
-const $switchAccessibilityIcon: ImageStyle = {
-  width: 14,
-  height: 14,
-  resizeMode: "contain",
-}
-
-const $switchAccessibilityLine: ViewStyle = {
-  width: 2,
-  height: 12,
-}
-
-const $switchAccessibilityCircle: ViewStyle = {
-  borderWidth: 2,
-  width: 12,
-  height: 12,
-  borderRadius: 6,
 }

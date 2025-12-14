@@ -5,6 +5,7 @@ import { useAppTheme } from "@/theme/context"
 import type { ThemedStyle } from "@/theme/types"
 
 import { Button, ButtonProps } from "./Button"
+import { $content, $heading, $image } from "./EmptyState.styles"
 import { Text, TextProps } from "./Text"
 
 const sadFace = require("@assets/images/sad-face.png")
@@ -236,13 +237,3 @@ export function EmptyState(props: EmptyStateProps) {
     </View>
   )
 }
-
-const $image: ImageStyle = { alignSelf: "center" }
-const $heading: ThemedStyle<TextStyle> = ({ spacing }) => ({
-  textAlign: "center",
-  paddingHorizontal: spacing.lg,
-})
-const $content: ThemedStyle<TextStyle> = ({ spacing }) => ({
-  textAlign: "center",
-  paddingHorizontal: spacing.lg,
-})

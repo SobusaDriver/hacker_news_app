@@ -15,9 +15,17 @@ import { isRTL } from "@/i18n"
 import { translate } from "@/i18n/translate"
 import { useAppTheme } from "@/theme/context"
 import { $styles } from "@/theme/styles"
-import type { ThemedStyle, ThemedStyleArray } from "@/theme/types"
+import type { ThemedStyleArray } from "@/theme/types"
 
 import { Text, TextProps } from "./Text"
+import {
+  $helperStyle,
+  $inputStyle,
+  $inputWrapperStyle,
+  $labelStyle,
+  $leftAccessoryStyle,
+  $rightAccessoryStyle,
+} from "./TextField.styles"
 
 export interface TextFieldAccessoryProps {
   style: StyleProp<ViewStyle | TextStyle | ImageStyle>
@@ -189,6 +197,7 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
       style={$containerStyles}
       onPress={focusInput}
       accessibilityState={{ disabled }}
+      testID={TextInputProps.testID ? `${TextInputProps.testID}-container` : undefined}
     >
       {!!(label || labelTx) && (
         <Text
@@ -244,49 +253,4 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
       )}
     </TouchableOpacity>
   )
-})
-
-const $labelStyle: ThemedStyle<TextStyle> = ({ spacing }) => ({
-  marginBottom: spacing.xs,
-})
-
-const $inputWrapperStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
-  alignItems: "flex-start",
-  borderWidth: 1,
-  borderRadius: 4,
-  backgroundColor: colors.palette.neutral200,
-  borderColor: colors.palette.neutral400,
-  overflow: "hidden",
-})
-
-const $inputStyle: ThemedStyle<TextStyle> = ({ colors, typography, spacing }) => ({
-  flex: 1,
-  alignSelf: "stretch",
-  fontFamily: typography.primary.normal,
-  color: colors.text,
-  fontSize: 16,
-  height: 24,
-  // https://github.com/facebook/react-native/issues/21720#issuecomment-532642093
-  paddingVertical: 0,
-  paddingHorizontal: 0,
-  marginVertical: spacing.xs,
-  marginHorizontal: spacing.sm,
-})
-
-const $helperStyle: ThemedStyle<TextStyle> = ({ spacing }) => ({
-  marginTop: spacing.xs,
-})
-
-const $rightAccessoryStyle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
-  marginEnd: spacing.xs,
-  height: 40,
-  justifyContent: "center",
-  alignItems: "center",
-})
-
-const $leftAccessoryStyle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
-  marginStart: spacing.xs,
-  height: 40,
-  justifyContent: "center",
-  alignItems: "center",
 })

@@ -5,7 +5,8 @@ import { useAppTheme } from "@/theme/context"
 import { $styles } from "@/theme/styles"
 
 import { iconRegistry, IconTypes } from "../Icon"
-import { $inputOuterBase, BaseToggleInputProps, ToggleProps, Toggle } from "./Toggle"
+import { $checkboxDetail, $inputOuter } from "./Checkbox.styles"
+import { BaseToggleInputProps, Toggle, ToggleProps } from "./Toggle"
 
 export interface CheckboxToggleProps extends Omit<ToggleProps<CheckboxInputProps>, "ToggleInput"> {
   /**
@@ -113,11 +114,3 @@ function CheckboxInput(props: CheckboxInputProps) {
     </View>
   )
 }
-
-const $checkboxDetail: ImageStyle = {
-  width: 20,
-  height: 20,
-  resizeMode: "contain",
-}
-
-const $inputOuter: StyleProp<ViewStyle> = [$inputOuterBase, { borderRadius: 4 }]

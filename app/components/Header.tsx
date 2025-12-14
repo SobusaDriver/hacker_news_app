@@ -15,6 +15,18 @@ import { $styles } from "@/theme/styles"
 import type { ThemedStyle } from "@/theme/types"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
 
+import {
+  $actionFillerContainer,
+  $actionIconContainer,
+  $actionText,
+  $actionTextContainer,
+  $container,
+  $title,
+  $titleWrapperCenter,
+  $titleWrapperFlex,
+  $titleWrapperPointerEvents,
+  $wrapper,
+} from "./Header.styles"
 import { IconTypes, PressableIcon } from "./Icon"
 import { Text, TextProps } from "./Text"
 
@@ -270,63 +282,4 @@ function HeaderAction(props: HeaderActionProps) {
   }
 
   return <View style={[$actionFillerContainer, { backgroundColor }]} />
-}
-
-const $wrapper: ViewStyle = {
-  height: 56,
-  alignItems: "center",
-  justifyContent: "space-between",
-}
-
-const $container: ViewStyle = {
-  width: "100%",
-}
-
-const $title: TextStyle = {
-  textAlign: "center",
-}
-
-const $actionTextContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
-  flexGrow: 0,
-  alignItems: "center",
-  justifyContent: "center",
-  height: "100%",
-  paddingHorizontal: spacing.md,
-  zIndex: 2,
-})
-
-const $actionText: ThemedStyle<TextStyle> = ({ colors }) => ({
-  color: colors.tint,
-})
-
-const $actionIconContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
-  flexGrow: 0,
-  alignItems: "center",
-  justifyContent: "center",
-  height: "100%",
-  paddingHorizontal: spacing.md,
-  zIndex: 2,
-})
-
-const $actionFillerContainer: ViewStyle = {
-  width: 16,
-}
-
-const $titleWrapperPointerEvents: ViewStyle = {
-  pointerEvents: "none",
-}
-
-const $titleWrapperCenter: ThemedStyle<ViewStyle> = ({ spacing }) => ({
-  alignItems: "center",
-  justifyContent: "center",
-  height: "100%",
-  width: "100%",
-  position: "absolute",
-  paddingHorizontal: spacing.xxl,
-  zIndex: 1,
-})
-
-const $titleWrapperFlex: ViewStyle = {
-  justifyContent: "center",
-  flexGrow: 1,
 }

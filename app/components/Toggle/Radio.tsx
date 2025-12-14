@@ -4,7 +4,8 @@ import { StyleProp, View, ViewStyle, Animated } from "react-native"
 import { useAppTheme } from "@/theme/context"
 import { $styles } from "@/theme/styles"
 
-import { $inputOuterBase, BaseToggleInputProps, ToggleProps, Toggle } from "./Toggle"
+import { $inputOuter, $radioDetail } from "./Radio.styles"
+import { BaseToggleInputProps, Toggle, ToggleProps } from "./Toggle"
 
 export interface RadioToggleProps extends Omit<ToggleProps<RadioInputProps>, "ToggleInput"> {
   /**
@@ -96,11 +97,3 @@ function RadioInput(props: RadioInputProps) {
     </View>
   )
 }
-
-const $radioDetail: ViewStyle = {
-  width: 12,
-  height: 12,
-  borderRadius: 6,
-}
-
-const $inputOuter: StyleProp<ViewStyle> = [$inputOuterBase, { borderRadius: 12 }]

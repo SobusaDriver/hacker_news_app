@@ -1,58 +1,73 @@
-// we always make sure 'react-native' gets included first
-// eslint-disable-next-line no-restricted-imports
-import * as ReactNative from "react-native"
+import { jest } from "@jest/globals"
 
-import mockFile from "./mockFile"
+// Mock react-native to fix Image component issue
+jest.mock("react-native", () => {
+  const RN = jest.requireActual("react-native") as any
 
-// libraries to mock
-jest.doMock("react-native", () => {
-  // Extend ReactNative
-  return Object.setPrototypeOf(
-    {
-      Image: {
-        ...ReactNative.Image,
-        resolveAssetSource: jest.fn((_source) => mockFile), // eslint-disable-line @typescript-eslint/no-unused-vars
-        getSize: jest.fn(
-          (
-            uri: string, // eslint-disable-line @typescript-eslint/no-unused-vars
-            success: (width: number, height: number) => void,
-            failure?: (_error: any) => void, // eslint-disable-line @typescript-eslint/no-unused-vars
-          ) => success(100, 100),
-        ),
-      },
-    },
-    ReactNative,
-  )
+  // Override Image
+  RN.Image = (props: any) => {
+    const React = require("react")
+    return React.createElement("Image", props, props.children)
+  }
+  RN.Image.displayName = "Image"
+  RN.Image.getSize = jest.fn()
+  RN.Image.getSizeWithHeaders = jest.fn()
+  RN.Image.prefetch = jest.fn()
+  RN.Image.resolveAssetSource = jest.fn((source: any) => source)
+
+  return RN
 })
 
-jest.mock("i18next", () => ({
-  currentLocale: "en",
-  t: (key: string, params: Record<string, string>) => {
-    return `${key} ${JSON.stringify(params)}`
-  },
-  translate: (key: string, params: Record<string, string>) => {
-    return `${key} ${JSON.stringify(params)}`
+jest.mock("react-native-keyboard-controller", () =>
+  require("react-native-keyboard-controller/jest"),
+)
+
+jest.mock("@react-navigation/native", () => {
+  const actualNav = jest.requireActual("@react-navigation/native")
+  return {
+    ...actualNav,
+    useScrollToTop: jest.fn(),
+    useNavigation: jest.fn(() => ({
+      navigate: jest.fn(),
+      goBack: jest.fn(),
+      setOptions: jest.fn(),
+      dispatch: jest.fn(),
+      addListener: jest.fn(() => jest.fn()),
+    })),
+    useRoute: jest.fn(() => ({
+      params: {},
+    })),
+    useFocusEffect: jest.fn((callback) => callback()),
+  }
+})
+
+// Mock Expo modules
+jest.mock("expo-notifications", () => ({
+  setNotificationHandler: jest.fn(),
+  getPermissionsAsync: jest.fn(),
+  requestPermissionsAsync: jest.fn(),
+  scheduleNotificationAsync: jest.fn(),
+}))
+
+jest.mock("expo-task-manager", () => ({
+  defineTask: jest.fn(),
+  isTaskRegisteredAsync: jest.fn().mockResolvedValue(false),
+  unregisterTaskAsync: jest.fn(),
+}))
+
+jest.mock("expo-background-task", () => ({
+  registerTaskAsync: jest.fn(),
+  unregisterTaskAsync: jest.fn(),
+  BackgroundTaskResult: {
+    Success: "success",
+    Failed: "failed",
   },
 }))
 
-jest.mock("expo-localization", () => ({
-  ...jest.requireActual("expo-localization"),
-  getLocales: () => [{ languageTag: "en-US", textDirection: "ltr" }],
-}))
-
-jest.mock("../app/i18n/index.ts", () => ({
-  i18n: {
-    isInitialized: true,
-    language: "en",
-    t: (key: string, params: Record<string, string>) => {
-      return `${key} ${JSON.stringify(params)}`
-    },
-    numberToCurrency: jest.fn(),
+jest.mock("react-native-webview", () => ({
+  WebView: (props: any) => {
+    const { View } = require("react-native")
+    const React = require("react")
+    return React.createElement(View, props)
   },
 }))
-
-declare const tron // eslint-disable-line @typescript-eslint/no-unused-vars
-
-declare global {
-  let __TEST__: boolean
-}

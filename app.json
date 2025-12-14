@@ -27,7 +27,12 @@
   "ios": {
     "icon": "./assets/images/app-icon-ios.png",
     "supportsTablet": true,
-    "bundleIdentifier": "com.hackernewsapp"
+    "bundleIdentifier": "com.hackernewsapp",
+    "infoPlist": {
+      "UIBackgroundModes": [
+        "fetch"
+      ]
+    }
   },
   "web": {
     "favicon": "./assets/images/app-icon-web-favicon.png",
@@ -54,7 +59,8 @@
         }
       }
     ],
-    "expo-build-properties"
+    "expo-background-task",
+    "expo-notifications"
   ],
   "experiments": {
     "tsconfigPaths": true

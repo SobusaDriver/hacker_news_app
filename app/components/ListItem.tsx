@@ -13,6 +13,15 @@ import { $styles } from "@/theme/styles"
 import type { ThemedStyle } from "@/theme/types"
 
 import { Icon, IconTypes } from "./Icon"
+import {
+  $iconContainer,
+  $iconContainerLeft,
+  $iconContainerRight,
+  $separatorBottom,
+  $separatorTop,
+  $textStyle,
+  $touchableStyle,
+} from "./ListItem.styles"
 import { Text, TextProps } from "./Text"
 
 export interface ListItemProps extends TouchableOpacityProps {
@@ -207,37 +216,3 @@ function ListItemAction(props: ListItemActionProps) {
 
   return null
 }
-
-const $separatorTop: ThemedStyle<ViewStyle> = ({ colors }) => ({
-  borderTopWidth: 1,
-  borderTopColor: colors.separator,
-})
-
-const $separatorBottom: ThemedStyle<ViewStyle> = ({ colors }) => ({
-  borderBottomWidth: 1,
-  borderBottomColor: colors.separator,
-})
-
-const $textStyle: ThemedStyle<TextStyle> = ({ spacing }) => ({
-  paddingVertical: spacing.xs,
-  alignSelf: "center",
-  flexGrow: 1,
-  flexShrink: 1,
-})
-
-const $touchableStyle: ViewStyle = {
-  alignItems: "flex-start",
-}
-
-const $iconContainer: ViewStyle = {
-  justifyContent: "center",
-  alignItems: "center",
-  flexGrow: 0,
-}
-const $iconContainerLeft: ThemedStyle<ViewStyle> = ({ spacing }) => ({
-  marginEnd: spacing.md,
-})
-
-const $iconContainerRight: ThemedStyle<ViewStyle> = ({ spacing }) => ({
-  marginStart: spacing.md,
-})
